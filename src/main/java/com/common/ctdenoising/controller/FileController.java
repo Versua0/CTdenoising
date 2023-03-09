@@ -5,12 +5,15 @@ import com.common.ctdenoising.entity.Files;
 import com.common.ctdenoising.response.ResponseCode;
 import com.common.ctdenoising.response.Result;
 import com.common.ctdenoising.service.FileService;
+import com.common.ctdenoising.utils.IpUtil;
+import org.apache.tomcat.util.net.IPv6Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import sun.net.util.IPAddressUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,9 +28,17 @@ import java.nio.charset.StandardCharsets;
 @RestController
 @RequestMapping("/api")
 public class FileController {
+
+
     @Autowired
     private FileService fileService;
 
+    @RequestMapping(value="/uploadNums/{Nums}",method = RequestMethod.GET)
+    public Result upLoadQuantity(@PathVariable String Nums,HttpServletRequest request) {
+        String ipAddress= IpUtil.getIpAddr(request);
+        // TODO:新建文件夹
+        return new Result(ResponseCode.SUCCESS.getCode(),ResponseCode.SUCCESS.getMsg(), null);
+    }
     @RequestMapping(value = "/upload",method = RequestMethod.POST)
     public Result upLoadFiles(MultipartFile multipartFile){
         if (multipartFile.isEmpty()){

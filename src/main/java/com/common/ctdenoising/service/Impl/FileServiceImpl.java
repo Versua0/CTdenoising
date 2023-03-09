@@ -32,7 +32,6 @@ public class FileServiceImpl implements FileService {
     @Override
     public Result upLoadFiles(MultipartFile file) {
         long MAX_SIZE = 2097152L;
-        // TODO: 需要保存用户的用于身份证明的信息或者说上传的时候返回图片的id，后续使用get方法下载该id处理完后的图片
         String fileName = file.getOriginalFilename();
         if (StringUtils.isEmpty(fileName)) {
             return new Result(ResponseCode.FILE_NAME_EMPTY.getCode(), ResponseCode.FILE_NAME_EMPTY.getMsg(), null);
@@ -42,6 +41,7 @@ public class FileServiceImpl implements FileService {
         }
         String suffixName = fileName.contains(".") ? fileName.substring(fileName.lastIndexOf(".")) : null;
         String newName = System.currentTimeMillis() + suffixName;
+
         File newFile = new File(savePath, newName);
         if (!newFile.getParentFile().exists()) {
             newFile.getParentFile().mkdirs();
