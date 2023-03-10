@@ -8,10 +8,7 @@ import com.common.ctdenoising.service.FileService;
 import com.common.ctdenoising.utils.IpUtil;
 import org.apache.tomcat.util.net.IPv6Utils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import sun.net.util.IPAddressUtil;
 
@@ -33,20 +30,26 @@ public class FileController {
     @Autowired
     private FileService fileService;
 
-    @RequestMapping(value="/uploadNums/{Nums}",method = RequestMethod.GET)
-    public Result upLoadQuantity(@PathVariable String Nums,HttpServletRequest request) {
-        String ipAddress= IpUtil.getIpAddr(request);
-        // TODO:新建文件夹
-        return new Result(ResponseCode.SUCCESS.getCode(),ResponseCode.SUCCESS.getMsg(), null);
-    }
-    @RequestMapping(value = "/upload",method = RequestMethod.POST)
-    public Result upLoadFiles(MultipartFile multipartFile){
-        if (multipartFile.isEmpty()){
-            return new Result(ResponseCode.FILE_EMPTY.getCode(),ResponseCode.FILE_EMPTY.getMsg(),null);
+    @RequestMapping(value="/multi/uploadMultiImage",method=RequestMethod.POST)
+    public Result uploadMultiImage(@RequestParam("files") MultipartFile[] files,HttpServletRequest request){
+        //files 就是前端传来的多文件数组
+        if (files.length<=0) {
+            return new Result(ResponseCode.FILE_EMPTY.getCode(), ResponseCode.FILE_EMPTY.getMsg(), null);
         }
-        return fileService.upLoadFiles(multipartFile);
+        for(MultipartFile file :files){
+            fileService.upLoadFiles(file,request);
+        }
+        return new Result(ResponseCode.SUCCESS.getCode(), ResponseCode.SUCCESS.getMsg(), "数据上传成功");
     }
 
+//    @RequestMapping(value = "/upload",method = RequestMethod.POST)
+//    public Result upLoadFiles(MultipartFile multipartFile) {
+//        if (multipartFile.isEmpty()) {
+//            return new Result(ResponseCode.FILE_EMPTY.getCode(), ResponseCode.FILE_EMPTY.getMsg(), null);
+//        }
+//        return fileService.upLoadFiles(multipartFile);
+
+//    }
     @RequestMapping(value = "/download/{id}",method = RequestMethod.GET)
     public void downloadFiles(@PathVariable("id") String id, HttpServletRequest request, HttpServletResponse response){
         OutputStream outputStream=null;

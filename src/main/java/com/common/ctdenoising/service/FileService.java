@@ -5,6 +5,7 @@ import com.common.ctdenoising.entity.Files;
 import com.common.ctdenoising.response.Result;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.InputStream;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public interface FileService {
      * @param file
      * @return
      */
-    Result upLoadFiles(MultipartFile file);
+    Result upLoadFiles(MultipartFile file, HttpServletRequest request);
 
     /**
      * 根据id获取文件

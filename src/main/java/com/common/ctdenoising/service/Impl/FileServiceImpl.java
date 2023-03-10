@@ -7,12 +7,14 @@ import com.common.ctdenoising.mapper.FileMapper;
 import com.common.ctdenoising.response.ResponseCode;
 import com.common.ctdenoising.response.Result;
 import com.common.ctdenoising.service.FileService;
+import com.common.ctdenoising.utils.IpUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +32,7 @@ public class FileServiceImpl implements FileService {
     private AfterFileMapper afterFileMapper;
 
     @Override
-    public Result upLoadFiles(MultipartFile file) {
+    public Result upLoadFiles(MultipartFile file, HttpServletRequest request) {
         long MAX_SIZE = 2097152L;
         String fileName = file.getOriginalFilename();
         if (StringUtils.isEmpty(fileName)) {
@@ -40,9 +42,8 @@ public class FileServiceImpl implements FileService {
             return new Result(ResponseCode.FILE_MAX_SIZE.getCode(), ResponseCode.FILE_MAX_SIZE.getMsg(), null);
         }
         String suffixName = fileName.contains(".") ? fileName.substring(fileName.lastIndexOf(".")) : null;
-        String newName = System.currentTimeMillis() + suffixName;
-
-        File newFile = new File(savePath, newName);
+        String saveChildPath=savePath+ "/"+IpUtil.getClientIpAddr(request);
+        File newFile = new File(saveChildPath, fileName);
         if (!newFile.getParentFile().exists()) {
             newFile.getParentFile().mkdirs();
         }
