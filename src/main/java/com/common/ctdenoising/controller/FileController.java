@@ -42,14 +42,14 @@ public class FileController {
         return new Result(ResponseCode.SUCCESS.getCode(), ResponseCode.SUCCESS.getMsg(), "数据上传成功");
     }
 
-//    @RequestMapping(value = "/upload",method = RequestMethod.POST)
-//    public Result upLoadFiles(MultipartFile multipartFile) {
-//        if (multipartFile.isEmpty()) {
-//            return new Result(ResponseCode.FILE_EMPTY.getCode(), ResponseCode.FILE_EMPTY.getMsg(), null);
-//        }
-//        return fileService.upLoadFiles(multipartFile);
+    @RequestMapping(value = "/upload",method = RequestMethod.POST)
+    public Result upLoadFiles(@RequestParam("file") MultipartFile multipartFile,HttpServletRequest request) {
+        if (multipartFile.isEmpty()) {
+            return new Result(ResponseCode.FILE_EMPTY.getCode(), ResponseCode.FILE_EMPTY.getMsg(), null);
+        }
+        return fileService.upLoadFiles(multipartFile,request);
 
-//    }
+    }
     @RequestMapping(value = "/download/{id}",method = RequestMethod.GET)
     public void downloadFiles(@PathVariable("id") String id, HttpServletRequest request, HttpServletResponse response){
         OutputStream outputStream=null;
@@ -89,6 +89,8 @@ public class FileController {
 
         }
     }
+    @RequestMapping(value="",method=RequestMethod.GET)
+    public void downloadByIp(HttpServletRequest request,HttpServletResponse response){
 
-
+    }
 }
