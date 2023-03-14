@@ -6,6 +6,7 @@ import com.common.ctdenoising.entity.Files;
 import com.common.ctdenoising.response.ResponseCode;
 import com.common.ctdenoising.response.Result;
 import com.common.ctdenoising.service.FileService;
+import com.common.ctdenoising.service.FileStateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +27,8 @@ public class FileController {
 
     @Autowired
     private FileService fileService;
+    @Autowired
+    private FileStateService fileStateService;
 
     @RequestMapping(value="/multi/uploadMultiImage",method=RequestMethod.POST)
     public Result uploadMultiImage(@RequestParam("files") MultipartFile[] files,HttpServletRequest request){
@@ -40,12 +43,16 @@ public class FileController {
     }
 
     @RequestMapping(value = "/upload",method = RequestMethod.POST)
-    public Result upLoadFiles(@RequestParam("file") MultipartFile multipartFile,HttpServletRequest request) {
+    public Result upLoadFile(@RequestParam("file") MultipartFile multipartFile,HttpServletRequest request) {
         if (multipartFile.isEmpty()) {
             return new Result(ResponseCode.FILE_EMPTY.getCode(), ResponseCode.FILE_EMPTY.getMsg(), null);
         }
         return fileService.upLoadFiles(multipartFile,request);
 
+    }
+    @RequestMapping(value="/uploadCompleted",method=RequestMethod.GET)
+    public Result upLoadConnectedState(HttpServletRequest request){
+        return fileStateService.UpdateUploadStateByIp(request);
     }
     @RequestMapping(value = "/download/{id}",method = RequestMethod.GET)
     public void downloadFiles(@PathVariable("id") String id, HttpServletRequest request, HttpServletResponse response){
@@ -91,4 +98,5 @@ public class FileController {
     public void downloadByIp(HttpServletRequest request,HttpServletResponse response){
 
     }
+
 }

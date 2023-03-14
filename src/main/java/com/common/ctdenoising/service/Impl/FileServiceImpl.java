@@ -8,6 +8,7 @@ import com.common.ctdenoising.mapper.FileMapper;
 import com.common.ctdenoising.response.ResponseCode;
 import com.common.ctdenoising.response.Result;
 import com.common.ctdenoising.service.FileService;
+import com.common.ctdenoising.service.FileStateService;
 import com.common.ctdenoising.utils.IpUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public  class FileServiceImpl extends ServiceImpl<FileMapper,Files> implements F
     @Autowired
     private FileMapper fileMapper;
     @Autowired
-    private AfterFileMapper afterFileMapper;
+    private FileStateService fileStateService;
 
     public Result upLoadFiles(MultipartFile file, HttpServletRequest request) {
         long MAX_SIZE = 2097152L;
@@ -55,6 +56,7 @@ public  class FileServiceImpl extends ServiceImpl<FileMapper,Files> implements F
         }
         Files files = new Files(null,newFile.getPath(), fileName, suffixName);
         fileMapper.insert(files);
+        fileStateService.IfCreateStateWithIp(IpUtil.getClientIpAddr(request));
         return new Result(ResponseCode.SUCCESS.getCode(), ResponseCode.SUCCESS.getMsg(), "数据上传成功");
     }
 
