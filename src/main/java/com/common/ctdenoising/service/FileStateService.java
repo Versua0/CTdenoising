@@ -1,4 +1,7 @@
 package com.common.ctdenoising.service;
 
-public interface FileStateService {
+import com.baomidou.mybatisplus.service.IService;
+import com.common.ctdenoising.entity.FileState;
+
+public interface FileStateService extends IService<FileState> {
 }

@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Setter
 @EqualsAndHashCode
 @TableName("fileState")
-public class fileState implements Serializable {
+public class FileState implements Serializable {
     private static final long serialVersionUID=1L;
     /**
      * 文件id

@@ -1,17 +1,14 @@
 package com.common.ctdenoising.controller;
 
 
+import com.baomidou.mybatisplus.service.IService;
 import com.common.ctdenoising.entity.Files;
 import com.common.ctdenoising.response.ResponseCode;
 import com.common.ctdenoising.response.Result;
 import com.common.ctdenoising.service.FileService;
-import com.common.ctdenoising.utils.IpUtil;
-import org.apache.tomcat.util.net.IPv6Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import sun.net.util.IPAddressUtil;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedInputStream;
@@ -89,6 +86,7 @@ public class FileController {
 
         }
     }
+
     @RequestMapping(value="",method=RequestMethod.GET)
     public void downloadByIp(HttpServletRequest request,HttpServletResponse response){
 

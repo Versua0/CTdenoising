@@ -1,6 +1,7 @@
 package com.common.ctdenoising.service.Impl;
 
 
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.common.ctdenoising.entity.Files;
 import com.common.ctdenoising.mapper.AfterFileMapper;
 import com.common.ctdenoising.mapper.FileMapper;
@@ -21,7 +22,7 @@ import java.util.List;
 
 
 @Service
-public class FileServiceImpl implements FileService {
+public  class FileServiceImpl extends ServiceImpl<FileMapper,Files> implements FileService {
 
 
     @Value("${file.save-path}")
@@ -31,7 +32,6 @@ public class FileServiceImpl implements FileService {
     @Autowired
     private AfterFileMapper afterFileMapper;
 
-    @Override
     public Result upLoadFiles(MultipartFile file, HttpServletRequest request) {
         long MAX_SIZE = 2097152L;
         String fileName = file.getOriginalFilename();
@@ -58,13 +58,11 @@ public class FileServiceImpl implements FileService {
         return new Result(ResponseCode.SUCCESS.getCode(), ResponseCode.SUCCESS.getMsg(), "数据上传成功");
     }
 
-    @Override
     public Files getFileById(String id) {
         return fileMapper.selectById(id);
 
     }
 
-    @Override
     public InputStream getFileInputStream(Files files) {
         File file = new File(files.getFilePath());
         try {
@@ -76,7 +74,6 @@ public class FileServiceImpl implements FileService {
     }
 
 
-    @Override
     public List<Integer> processFiles(List<Files> filesList) {
         List<Integer> ids=new ArrayList<>();
         for (Files file : filesList) {

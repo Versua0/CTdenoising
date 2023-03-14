@@ -1,6 +1,7 @@
 package com.common.ctdenoising.service;
 
 
+import com.baomidou.mybatisplus.service.IService;
 import com.common.ctdenoising.entity.Files;
 import com.common.ctdenoising.response.Result;
 import org.springframework.web.multipart.MultipartFile;
@@ -10,7 +11,7 @@ import java.io.InputStream;
 import java.util.List;
 
 
-public interface FileService {
+public interface FileService extends IService<Files>  {
 
     /**
      * 文件上传接口
