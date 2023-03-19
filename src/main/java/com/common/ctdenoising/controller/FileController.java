@@ -17,7 +17,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
-
+import java.util.LinkedList;
+import java.util.Queue;
 
 
 @RestController
@@ -29,6 +30,8 @@ public class FileController {
     private FileService fileService;
     @Autowired
     private FileStateService fileStateService;
+
+    Queue<String> queue =new LinkedList(); //test_patient
 
     @RequestMapping(value="/multi/uploadMultiImage",method=RequestMethod.POST)
     public Result uploadMultiImage(@RequestParam("files") MultipartFile[] files,HttpServletRequest request){

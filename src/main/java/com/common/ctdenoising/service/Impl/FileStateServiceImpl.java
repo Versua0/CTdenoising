@@ -17,6 +17,8 @@ public  class FileStateServiceImpl extends ServiceImpl<FileStateMapper, FileStat
 
     @Autowired
     private FileStateMapper fileStateMapper;
+    @Autowired
+    private RestTemplateMethods restTemplateMethods;
 
     @Override
     public Result UpdateUploadStateByIp(HttpServletRequest request) {
@@ -41,6 +43,7 @@ public  class FileStateServiceImpl extends ServiceImpl<FileStateMapper, FileStat
             //上传完毕设为1
             fileState.setProcessingCompletedState(1);
             fileStateMapper.updateById(fileState);
+
             return new Result(ResponseCode.SUCCESS.getCode(), ResponseCode.SUCCESS.getMsg(), "状态修改成功");
         }
         return new Result(ResponseCode.SUCCESS.getCode(), ResponseCode.SUCCESS.getMsg(), "状态修改成功");
