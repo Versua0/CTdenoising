@@ -11,4 +11,4 @@ mybatis-plus:
   typeAliasesPackage: com.common.ctdenoising.entity
   mapperLocations: classpath:mapper/*.xml
 file:
-  save-path: E:/Document/project/Code/CTdenoising/src/main/resources/pics
+  save-path: \RED-CNN-master(Lite)\data

@@ -7,6 +7,7 @@ import com.common.ctdenoising.response.ResponseCode;
 import com.common.ctdenoising.response.Result;
 import com.common.ctdenoising.service.FileService;
 import com.common.ctdenoising.service.FileStateService;
+import com.common.ctdenoising.service.Impl.RestTemplateMethods;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,7 +21,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.Queue;
 
-
+@CrossOrigin
 @RestController
 @RequestMapping("/api")
 public class FileController {
@@ -30,6 +31,7 @@ public class FileController {
     private FileService fileService;
     @Autowired
     private FileStateService fileStateService;
+
 
     Queue<String> queue =new LinkedList(); //test_patient
 
@@ -55,7 +57,8 @@ public class FileController {
     }
     @RequestMapping(value="/uploadCompleted",method=RequestMethod.GET)
     public Result upLoadConnectedState(HttpServletRequest request){
-        return fileStateService.UpdateUploadStateByIp(request);
+        //return fileStateService.UpdateUploadStateByIp(request);
+        return fileService.processFiles(request);
     }
     @RequestMapping(value = "/download/{id}",method = RequestMethod.GET)
     public void downloadFiles(@PathVariable("id") String id, HttpServletRequest request, HttpServletResponse response){
@@ -97,9 +100,9 @@ public class FileController {
         }
     }
 
-    @RequestMapping(value="",method=RequestMethod.GET)
-    public void downloadByIp(HttpServletRequest request,HttpServletResponse response){
-
+    @RequestMapping(value="getResult",method=RequestMethod.GET)
+    public Result getUrlsByIp(HttpServletRequest request,HttpServletResponse response){
+        return fileService.returnUrls(request,response);
     }
 
 }

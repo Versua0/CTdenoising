@@ -7,6 +7,7 @@ import com.common.ctdenoising.response.Result;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.util.List;
 
@@ -41,7 +42,9 @@ public interface FileService extends IService<Files>  {
      * @param
      * @return: 返回处理完的文件的id
      */
-    List<Integer>  processFiles(List<Files> ids);
+    Result  processFiles(HttpServletRequest request);
 
+
+    Result  returnUrls(HttpServletRequest request, HttpServletResponse response);
 
 }

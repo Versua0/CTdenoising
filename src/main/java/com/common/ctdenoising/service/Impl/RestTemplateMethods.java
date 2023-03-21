@@ -12,8 +12,8 @@ public class RestTemplateMethods {
     @Autowired
     private RestTemplate restTemplate;
 
-    public void RestTemplatePost(String url,String test_patient) {
-        //String url = "http://192.168.161.1:5000/predict";
+    public void RestTemplatePost(String test_patient) {
+        String url = "http://192.168.161.1:5000/predict";
         LinkedMultiValueMap<String, String> request = new LinkedMultiValueMap<>();
         request.set("test_patient", test_patient);
 

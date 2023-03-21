@@ -33,25 +33,25 @@ public class MonitorFilesThread extends Thread{
      */
     @Override
     public void run() {
-       while(true){
-           List<Files> filesList=fileMapper.findAll();
-           if(!filesList.isEmpty()){  //有文件需要处理
-
-              List<Integer> ids=fileService.processFiles(filesList);
-
-           //从A表->B表
-           //从A表删除
-           Integer result =fileMapper.deleteBatchIds(ids);
-           if(result!=null){
-               for (Files file:filesList ) {
-                    AfterFiles afterFiles=file.ConvertTo(file);
-                    //TODO: 需要对文件路径进行修改，未处理的图片跟处理后的文件存储的地方不同
-                    AfterFileMapper.insert(afterFiles);
-               }
-
-           }
-           }
-       }
+//       while(true){
+//           List<Files> filesList=fileMapper.findAll();
+//           if(!filesList.isEmpty()){  //有文件需要处理
+//
+//              List<Integer> ids=fileService.processFiles(filesList);
+//
+//           //从A表->B表
+//           //从A表删除
+//           Integer result =fileMapper.deleteBatchIds(ids);
+//           if(result!=null){
+//               for (Files file:filesList ) {
+//                    AfterFiles afterFiles=file.ConvertTo(file);
+//                    //TODO: 需要对文件路径进行修改，未处理的图片跟处理后的文件存储的地方不同
+//                    AfterFileMapper.insert(afterFiles);
+//               }
+//
+//           }
+//           }
+//       }
     }
 
 
