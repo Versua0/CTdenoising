@@ -100,7 +100,7 @@ public class FileController {
         }
     }
 
-    @RequestMapping(value="getResult",method=RequestMethod.GET)
+    @RequestMapping(value="/getResult",method=RequestMethod.GET)
     public Result getUrlsByIp(HttpServletRequest request,HttpServletResponse response){
         return fileService.returnUrls(request,response);
     }

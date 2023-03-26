@@ -7,6 +7,8 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.io.File;
+
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
     @Override
@@ -31,8 +33,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
          * addResourceHandler：访问映射路径
          * addResourceLocations：资源绝对路径
          */
+        String projectRootDirectoryPath = System.getProperty("user.dir");
+        // 通过 File 对象的 getParent() 方法获取到根目录的上级目录
+        String parentPath = new File(projectRootDirectoryPath).getParent();
+
         registry.addResourceHandler("/result/**")
-                .addResourceLocations("file:///E:/Document/project/RED-CNN-master(Lite)/save/fig/");
+                .addResourceLocations("file:///"+parentPath+"/RED-CNN-master(Lite)\\save/fig/");
     }
 
 

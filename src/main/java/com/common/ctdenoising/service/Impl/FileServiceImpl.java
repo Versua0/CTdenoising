@@ -24,10 +24,10 @@ import java.util.List;
 
 
 @Service
-public  class FileServiceImpl extends ServiceImpl<FileMapper,Files> implements FileService {
+public class FileServiceImpl extends ServiceImpl<FileMapper, Files> implements FileService {
 
 
-     @Value("${file.save-path}")
+    @Value("${file.save-path}")
     private String savePath;
     @Autowired
     private FileMapper fileMapper;
@@ -42,7 +42,7 @@ public  class FileServiceImpl extends ServiceImpl<FileMapper,Files> implements F
         String projectRootDirectoryPath = System.getProperty("user.dir");
         // 通过 File 对象的 getParent() 方法获取到根目录的上级目录
         String parentPath = new File(projectRootDirectoryPath).getParent();
-        String path =parentPath+savePath; //python 项目的未处理文件路径
+        String path = parentPath + savePath; //python 项目的未处理文件路径
 
         String fileName = file.getOriginalFilename();
         if (StringUtils.isEmpty(fileName)) {
@@ -93,9 +93,8 @@ public  class FileServiceImpl extends ServiceImpl<FileMapper,Files> implements F
         String projectRootDirectoryPath = System.getProperty("user.dir");
         // 通过 File 对象的 getParent() 方法获取到根目录的上级目录
         String parentPath = new File(projectRootDirectoryPath).getParent();
-        String filesPath=parentPath+savePath+'/'+IpUtil.getClientIpAddr(request);
+        String filesPath = parentPath + savePath + '/' + IpUtil.getClientIpAddr(request);
         System.out.println(filesPath);
-        FileSystemUtils.deleteRecursively(new File(filesPath));
         //从结果文件夹发回--这个可以用一个get来请求或者使用轮询
         return new Result(ResponseCode.SUCCESS.getCode(), ResponseCode.SUCCESS.getMsg(), "OK");
     }
@@ -107,16 +106,16 @@ public  class FileServiceImpl extends ServiceImpl<FileMapper,Files> implements F
         // 通过 File 对象的 getParent() 方法获取到根目录的上级目录
         String parentPath = new File(projectRootDirectoryPath).getParent();
         //结果图片存放位置
-        String resultPath="/RED-CNN-master(Lite)/save/fig/";
-        String pppath="http://localhost:80";//不能访问本地文件，换成映射路径
+        String resultPath = "/RED-CNN-master(Lite)/save/fig/";
+        String pppath = "wadouri:http://localhost:80";//不能访问本地文件，换成映射路径
         String ip = IpUtil.getClientIpAddr(request);
-        String path =parentPath+resultPath+ip; //python 图片目录
-        String RetPath =pppath+"/result/"+ip+"/";
+        String path = parentPath + resultPath + ip; //python 图片目录
+        String RetPath = pppath + "/result/"+ ip + "/";
         File file = new File(path);
         File[] files = file.listFiles(); //获取所有的文件名
-        List<String> ResultUrls=new ArrayList<>();
-        for(File file1 :files){
-            ResultUrls.add(RetPath+file1.getName());
+        List<String> ResultUrls = new ArrayList<>();
+        for (File file1 : files) {
+            ResultUrls.add(RetPath + file1.getName());
         }
         return new Result(ResponseCode.SUCCESS.getCode(), ResponseCode.SUCCESS.getMsg(), ResultUrls);
     }

@@ -1,5 +1,10 @@
 server:
   port: 80
+  servlet:
+    encoding:
+      charset: utf-8
+      enabled: true
+      force: true
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -12,3 +17,7 @@ mybatis-plus:
   mapperLocations: classpath:mapper/*.xml
 file:
   save-path: \RED-CNN-master(Lite)\data
+logging:
+  level:
+    root: INFO
+    web: DEBUG
