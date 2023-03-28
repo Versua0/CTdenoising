@@ -39,11 +39,11 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, Files> implements F
     public Result upLoadFiles(MultipartFile file, HttpServletRequest request) {
         long MAX_SIZE = 2097152L;
         // 通过 System.getProperty("user.dir") 方式获取到项目根目录
-        String projectRootDirectoryPath = System.getProperty("user.dir");
-        // 通过 File 对象的 getParent() 方法获取到根目录的上级目录
-        String parentPath = new File(projectRootDirectoryPath).getParent();
-        String path = parentPath + savePath; //python 项目的未处理文件路径
-
+//        String projectRootDirectoryPath = System.getProperty("user.dir");
+//        // 通过 File 对象的 getParent() 方法获取到根目录的上级目录
+//        String parentPath = new File(projectRootDirectoryPath).getParent();
+        //String path = parentPath + savePath; //python 项目的未处理文件路径
+        String path ="/home/hejinwen/RED-CNN-master(Lite)/data";
         String fileName = file.getOriginalFilename();
         if (StringUtils.isEmpty(fileName)) {
             return new Result(ResponseCode.FILE_NAME_EMPTY.getCode(), ResponseCode.FILE_NAME_EMPTY.getMsg(), null);
@@ -65,7 +65,7 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, Files> implements F
         }
         Files files = new Files(null, newFile.getPath(), fileName, suffixName);
         fileMapper.insert(files);
-        fileStateService.IfCreateStateWithIp(IpUtil.getClientIpAddr(request));
+       // fileStateService.IfCreateStateWithIp(IpUtil.getClientIpAddr(request));
         return new Result(ResponseCode.SUCCESS.getCode(), ResponseCode.SUCCESS.getMsg(), "数据上传成功");
     }
 
@@ -90,9 +90,10 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, Files> implements F
         restTemplateMethods.RestTemplatePost(IpUtil.getClientIpAddr(request));
         //对原始文件进行删除
 
-        String projectRootDirectoryPath = System.getProperty("user.dir");
-        // 通过 File 对象的 getParent() 方法获取到根目录的上级目录
-        String parentPath = new File(projectRootDirectoryPath).getParent();
+//        String projectRootDirectoryPath = System.getProperty("user.dir");
+//        // 通过 File 对象的 getParent() 方法获取到根目录的上级目录
+//        String parentPath = new File(projectRootDirectoryPath).getParent();
+        String parentPath ="/home/hejinwen";
         String filesPath = parentPath + savePath + '/' + IpUtil.getClientIpAddr(request);
         System.out.println(filesPath);
         //从结果文件夹发回--这个可以用一个get来请求或者使用轮询
@@ -102,12 +103,13 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, Files> implements F
     @Override
     public Result returnUrls(HttpServletRequest request, HttpServletResponse response) {
         // 通过 System.getProperty("user.dir") 方式获取到项目根目录
-        String projectRootDirectoryPath = System.getProperty("user.dir");
-        // 通过 File 对象的 getParent() 方法获取到根目录的上级目录
-        String parentPath = new File(projectRootDirectoryPath).getParent();
-        //结果图片存放位置
+//        String projectRootDirectoryPath = System.getProperty("user.dir");
+//        // 通过 File 对象的 getParent() 方法获取到根目录的上级目录
+//        String parentPath = new File(projectRootDirectoryPath).getParent();
+//        //结果图片存放位置
+        String parentPath="/home/hejinwen";
         String resultPath = "/RED-CNN-master(Lite)/save/fig/";
-        String pppath = "wadouri:http://localhost:80";//不能访问本地文件，换成映射路径
+        String pppath = "wadouri:http://10.21.19.104:6000";//不能访问本地文件，换成映射路径
         String ip = IpUtil.getClientIpAddr(request);
         String path = parentPath + resultPath + ip; //python 图片目录
         String RetPath = pppath + "/result/"+ ip + "/";

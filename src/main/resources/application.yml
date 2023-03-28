@@ -1,5 +1,5 @@
 server:
-  port: 80
+  port: 6000
   servlet:
     encoding:
       charset: utf-8
@@ -9,9 +9,9 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     name: defaultDataSource
-    url: jdbc:mysql://localhost:3306/data?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=GMT%2B8
-    username: root
-    password: WoW161726
+    url: jdbc:mysql://10.21.19.104:3306/data?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: CT
+    password: 123456
 mybatis-plus:
   typeAliasesPackage: com.common.ctdenoising.entity
   mapperLocations: classpath:mapper/*.xml
